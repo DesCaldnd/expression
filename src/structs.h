@@ -28,11 +28,11 @@ struct vector
     int capacity;
 };
 
-struct vector* vector_init();
+struct vector vector_init();
 int vector_is_valid(struct vector* vec);
 void vector_realloc(struct vector* vec);
 void vector_push_back(struct vector* vec, struct expr_item item);
-struct expr_item vector_get_elem(struct* vec, int index);
+struct expr_item vector_get_elem(struct vector* vec, int index);
 void vector_destroy(struct vector* vec);
 
 struct expr_item
