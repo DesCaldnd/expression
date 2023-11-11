@@ -1,3 +1,6 @@
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
 enum oper_type
 {
     PLUS, UN_MINUS, BIN_MINUS, MULTIPLY, DIVIDE, OPEN_B, CLOSE_B, SIN, COS, TAN, CTG, SQRT, LN, VARIABLE, CONSTANT, UNDEF
@@ -38,3 +41,5 @@ struct expr_item
     double value; // на случай если это константа
     int (*calculate)(struct expr_item, struct stack*, double x); //указатель на функцию которая будет все вычислять
 };
+
+#endif
