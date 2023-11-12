@@ -4,9 +4,30 @@
 #include <math.h>
 
 
+void push_all_by_priority(struct stack **top, struct vector* expression, int cur_priority)
+{
+    while(!stack_is_empty(*top) && vector_is_valid(*expression) && stack_top(*top).priority >= cur_priority)
+    {
+        vector_push_back(expression, stack_top(*top));
+        stack_pop(top);
+    }
+}
+
+void push_all(struct stack **top, struct vector* expression)
+{
+    while(!stack_is_empty(*top) && vector_is_valid(*expression))
+    {
+        vector_push_back(expression, stack_top(*top));
+        stack_pop(top);
+    }
+}
+
 double calculate_expression(struct vector expression, double x)
 {
     struct stack_d* var_stack = stack_d_init();
+
+    if (var_stack == NULL)
+        return NAN;
 
     for (int i = 0; i < expression.size; ++i)
     {
@@ -18,10 +39,72 @@ double calculate_expression(struct vector expression, double x)
         }
     }
 
-    double res = 0;
+    double res = NAN;
     if (!stack_d_is_empty(var_stack))
         stack_d_top(var_stack);
     stack_d_destroy(var_stack);
+    return res;
+}
+
+struct vector expression_to_postfix(char* str)
+{
+    struct vector res = vector_init();
+    if (!vector_is_valid(res))
+        return res;
+
+    struct stack* oper_stack = stack_init();
+    if (oper_stack == NULL)
+    {
+        vector_destroy(&res);
+        return res;
+    }
+
+    int has_left_operand = 0;
+
+    while (*str != '\0')
+    {
+        struct expr_item item;
+        str = get_lexem(str, &item, &has_left_operand);
+
+        if (item.type == UNDEF)
+        {
+            vector_destroy(&res);
+            stack_destroy(oper_stack);
+            return res;
+        } 
+        if (item.type == VARIABLE || item.type == CONSTANT)
+        {
+            vector_push_back(&res, item);
+            if (!vector_is_valid(res))
+            {
+                stack_destroy(oper_stack);
+                return res;
+            }
+        } else if (item.type == CLOSE_B)
+        {
+            push_all_by_priority(&oper_stack, &res, item.priority);
+            if (!stack_is_empty(oper_stack) && vector_is_valid(res) && stack_top(oper_stack).type == OPEN_B)
+                stack_pop(&oper_stack);
+            else
+            {
+                if (vector_is_valid(res))
+                    vector_destroy(&res);
+                stack_destroy(oper_stack);
+                return res;
+            }
+        } else
+        {
+            push_all_by_priority(&oper_stack, &res, item.priority);
+            if (!vector_is_valid)
+            {
+                stack_destroy(oper_stack);
+                return res;
+            }
+        }
+    }
+
+    push_all(&oper_stack, &res);
+    stack_destroy(oper_stack);
     return res;
 }
 

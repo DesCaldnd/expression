@@ -2,11 +2,14 @@
 #include "expression_process.h"
 #include <stdio.h>
 
+#define PI 3.14159265359
+
 #define X 80
 #define Y 25
 
 void fill_screen(char screen[X][Y], struct vector expression);
 void print_screen(char screen[X][Y]);
+int clamp (int val, int down, int up);
 
 int main()
 {
@@ -35,7 +38,15 @@ void fill_screen(char screen[X][Y], struct vector expression)
         for(int i = 0; i < X; ++i)
             screen[i][j] = '.';
 
-    
+    for(int i = 0; i < X; ++i)
+    {
+        double x = (((double)i / X) + ((double) 1 / (2 * X))) * 4 * PI;
+        double y = calculate_expression(expression, x);
+        if (y >= -1 && y <= 1)
+        {
+            screen[i][clamp(((y + 1) * Y) / 2, 0, Y - 1)] = '*';
+        }
+    }
 }
 
 void print_screen(char screen[X][Y])
@@ -46,4 +57,14 @@ void print_screen(char screen[X][Y])
             putchar(screen[i][j]);
         putchar('\n');
     }
+}
+
+int clamp (int val, int down, int up)
+{
+    if (val > up)
+        return up;
+    else if (up < down)
+        return down;
+    else
+        return val;
 }

@@ -4,7 +4,8 @@
 struct stack* stack_init()
 {
     struct stack* res = malloc(sizeof(struct stack));
-    res->down = NULL;
+    if (res != NULL)
+        res->down = NULL;
     return res;
 }
 
@@ -54,7 +55,8 @@ void stack_destroy(struct stack* top)
 struct stack_d* stack_d_init()
 {
     struct stack_d* res = malloc(sizeof(struct stack_d));
-    res->down = NULL;
+    if (res != NULL)
+        res->down = NULL;
     return res;
 }
 
@@ -142,6 +144,7 @@ void vector_destroy(struct vector* vec)
 {
     if (vec->data != NULL)
         free(vec->data);
+    vec->data = NULL;
 }
 
 //---------------------------------
