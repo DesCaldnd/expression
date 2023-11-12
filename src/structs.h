@@ -13,6 +13,7 @@ enum oper_type {
     COS,
     TAN,
     CTG,
+    POW,
     SQRT,
     LN,
     VARIABLE,

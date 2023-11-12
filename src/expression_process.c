@@ -153,6 +153,12 @@ char* get_lexem(char* str, struct expr_item* answer, int* has_left_operand) {
         answer->calculate = &calc_multiply;
         *has_left_operand = 0;
         str += 1;
+    } else if (strncmp("^", str, 1) == 0 && *has_left_operand) {
+        answer->type = MULTIPLY;
+        answer->priority = 3;
+        answer->calculate = &calc_pow;
+        *has_left_operand = 0;
+        str += 1;
     } else if (strncmp("/", str, 1) == 0 && *has_left_operand) {
         answer->type = DIVIDE;
         answer->priority = 2;
@@ -329,4 +335,17 @@ int calc_var(double value, struct stack_d** top, double x) {
 int calc_const(double value, struct stack_d** top, double x) {
     stack_d_push(top, value + 0 * x);
     return (*top)->data == value;
+}
+
+int calc_pow(double value, struct stack_d** top, double x) {
+    if (!stack_d_is_empty((*top)->down)) {
+        double rhs = stack_d_top(*top);
+        stack_d_pop(top);
+        double lhs = stack_d_top(*top);
+        stack_d_pop(top);
+        lhs = pow(lhs, rhs) + 0 * value + 0 * x;
+        stack_d_push(top, lhs);
+        return (*top)->data == lhs;
+    }
+    return 0;
 }

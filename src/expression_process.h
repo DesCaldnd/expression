@@ -19,6 +19,7 @@ int calc_tan(double value, struct stack_d** top, double x);
 int calc_ctg(double value, struct stack_d** top, double x);
 int calc_sqrt(double value, struct stack_d** top, double x);
 int calc_ln(double value, struct stack_d** top, double x);
+int calc_pow(double value, struct stack_d** top, double x);
 int calc_plus(double value, struct stack_d** top, double x);
 int calc_un_minus(double value, struct stack_d** top, double x);
 int calc_bin_minus(double value, struct stack_d** top, double x);
