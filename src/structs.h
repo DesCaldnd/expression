@@ -1,29 +1,40 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-enum oper_type
-{
-    PLUS, UN_MINUS, BIN_MINUS, MULTIPLY, DIVIDE, OPEN_B, CLOSE_B, SIN, COS, TAN, CTG, SQRT, LN, VARIABLE, CONSTANT, UNDEF
+enum oper_type {
+    PLUS,
+    UN_MINUS,
+    BIN_MINUS,
+    MULTIPLY,
+    DIVIDE,
+    OPEN_B,
+    CLOSE_B,
+    SIN,
+    COS,
+    TAN,
+    CTG,
+    SQRT,
+    LN,
+    VARIABLE,
+    CONSTANT,
+    UNDEF
 };
 
-
-struct stack_d
-{
+struct stack_d {
     double data;
     struct stack_d* down;
 };
 
-//int get_priority(enum oper_type oper);
-struct expr_item
-{
+// int get_priority(enum oper_type oper);
+struct expr_item {
     enum oper_type type;
-    double value; // на случай если это константа
-    int priority; // приоритет операции
-    int (*calculate)(double value, struct stack_d** top, double x); //указатель на функцию которая будет все вычислять
+    double value;  // на случай если это константа
+    int priority;  // приоритет операции
+    int (*calculate)(double value, struct stack_d** top,
+                     double x);  //указатель на функцию которая будет все вычислять
 };
 
-struct stack
-{
+struct stack {
     struct expr_item data;
     struct stack* down;
 };
@@ -42,8 +53,7 @@ void stack_pop(struct stack** top);
 int stack_is_empty(struct stack* top);
 void stack_destroy(struct stack* top);
 
-struct vector
-{
+struct vector {
     struct expr_item* data;
     int size;
     int capacity;
@@ -55,7 +65,5 @@ void vector_realloc(struct vector* vec);
 void vector_push_back(struct vector* vec, struct expr_item item);
 struct expr_item vector_get_elem(struct vector* vec, int index);
 void vector_destroy(struct vector* vec);
-
-
 
 #endif

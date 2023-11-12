@@ -1,4 +1,4 @@
-FLAGS=-Wall -Werror -Wextra
+FLAGS=-Wall -Werror -Wextra -fsanitize=address -fsanitize=leak
 OUT=../build/graph.out
 
 all: graph clean
