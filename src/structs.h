@@ -6,19 +6,25 @@ enum oper_type
     PLUS, UN_MINUS, BIN_MINUS, MULTIPLY, DIVIDE, OPEN_B, CLOSE_B, SIN, COS, TAN, CTG, SQRT, LN, VARIABLE, CONSTANT, UNDEF
 };
 
-//int get_priority(enum oper_type oper);
-
-struct expr_item;
-
-struct stack
-{
-    struct expr_item data;
-    struct stack* down;
-};
 
 struct stack_d
 {
     double data;
+    struct stack_d* down;
+};
+
+//int get_priority(enum oper_type oper);
+struct expr_item
+{
+    enum oper_type type;
+    double value; // на случай если это константа
+    int priority; // приоритет операции
+    int (*calculate)(double value, struct stack_d** top, double x); //указатель на функцию которая будет все вычислять
+};
+
+struct stack
+{
+    struct expr_item data;
     struct stack* down;
 };
 
@@ -50,12 +56,6 @@ void vector_push_back(struct vector* vec, struct expr_item item);
 struct expr_item vector_get_elem(struct vector* vec, int index);
 void vector_destroy(struct vector* vec);
 
-struct expr_item
-{
-    enum oper_type type;
-    double value; // на случай если это константа
-    int priority; // приоритет операции
-    int (*calculate)(double value, struct stack_d** top, double x); //указатель на функцию которая будет все вычислять
-};
+
 
 #endif

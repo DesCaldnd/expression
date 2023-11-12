@@ -95,7 +95,7 @@ struct vector expression_to_postfix(char* str)
         } else
         {
             push_all_by_priority(&oper_stack, &res, item.priority);
-            if (!vector_is_valid)
+            if (!vector_is_valid(res))
             {
                 stack_destroy(oper_stack);
                 return res;
@@ -273,7 +273,7 @@ int calc_ctg(double value, struct stack_d** top, double x)
     {
         double val = stack_d_top(*top);
         stack_d_pop(top);
-        val = ctg(val) + 0 * x + 0 * value;
+        val = cos(val) / sin(val) + 0 * x + 0 * value;
         stack_d_push(top, val);
         return (*top)->data == val;
     }
@@ -314,7 +314,7 @@ int calc_plus(double value, struct stack_d** top, double x)
         stack_d_pop(top);
         double lhs = stack_d_top(*top);
         stack_d_pop(top);
-        lhs += rhs;
+        lhs += rhs + 0 * value + 0 * x;
         stack_d_push(top, lhs);
         return (*top)->data == lhs;
     }
@@ -342,7 +342,7 @@ int calc_bin_minus(double value, struct stack_d** top, double x)
         stack_d_pop(top);
         double lhs = stack_d_top(*top);
         stack_d_pop(top);
-        lhs -= rhs;
+        lhs -= rhs + 0 * value + 0 * x;
         stack_d_push(top, lhs);
         return (*top)->data == lhs;
     }
@@ -357,7 +357,7 @@ int calc_multiply(double value, struct stack_d** top, double x)
         stack_d_pop(top);
         double lhs = stack_d_top(*top);
         stack_d_pop(top);
-        lhs *= rhs;
+        lhs *= rhs + 0 * value + 0 * x;
         stack_d_push(top, lhs);
         return (*top)->data == lhs;
     }
@@ -372,7 +372,7 @@ int calc_divide(double value, struct stack_d** top, double x)
         stack_d_pop(top);
         double lhs = stack_d_top(*top);
         stack_d_pop(top);
-        lhs /= rhs;
+        lhs /= rhs + 0 * value + 0 * x;
         stack_d_push(top, lhs);
         return (*top)->data == lhs;
     }
