@@ -1,5 +1,8 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
+#include "extern.h"
+
+EXTERN_START
 
 enum oper_type {
     PLUS,
@@ -67,4 +70,5 @@ void vector_push_back(struct vector* vec, struct expr_item item);
 struct expr_item vector_get_elem(struct vector* vec, int index);
 void vector_destroy(struct vector* vec);
 
+EXTERN_END
 #endif

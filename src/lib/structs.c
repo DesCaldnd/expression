@@ -1,4 +1,4 @@
-#include "structs.h"
+#include "src/include/structs.h"
 
 #include <stdlib.h>
 
@@ -95,7 +95,7 @@ struct vector vector_init() {
 int vector_is_valid(struct vector vec) { return vec.data != NULL; }
 
 void vector_realloc(struct vector* vec) {
-    vec->data = realloc(vec->data, vec->capacity * 2);
+    vec->data = realloc(vec->data, vec->capacity * 2 * sizeof(struct expr_item));
     vec->capacity *= 2;
 }
 

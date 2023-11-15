@@ -6,10 +6,10 @@ all: graph clean
 graph: graph.c expression_process.o structs.o
 	gcc ${FLAGS} -o ${OUT} graph.c expression_process.o structs.o -lm
 
-expression_process.o: expression_process.h expression_process.c
+expression_process.o: include/expression_process.h lib/expression_process.c
 	gcc ${FLAGS} -c expression_process.h expression_process.c
 
-structs.o: structs.h structs.c
+structs.o: include/structs.h lib/structs.c
 	gcc ${FLAGS} -c structs.h structs.c
 
 clean:

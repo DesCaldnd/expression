@@ -1,4 +1,4 @@
-#include "expression_process.h"
+#include "src/include/expression_process.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -15,6 +15,11 @@ void push_all_by_priority(struct stack** top, struct vector* expression, int cur
 
 void push_all(struct stack** top, struct vector* expression) {
     while (!stack_is_empty(*top) && vector_is_valid(*expression)) {
+        if (stack_top(*top).type == OPEN_B)
+        {
+            vector_destroy(expression);
+            return;
+        }
         vector_push_back(expression, stack_top(*top));
         stack_pop(top);
     }
@@ -88,6 +93,10 @@ struct vector expression_to_postfix(char* str) {
 
     push_all(&oper_stack, &res);
     stack_destroy(oper_stack);
+    if(has_left_operand == 0 || res.size == 0)
+    {
+        vector_destroy(&res);
+    }
     return res;
 }
 

@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 
-#include "expression_process.h"
+#include "src/include/expression_process.h"
 
 #define PI 3.14159265359
 
@@ -27,6 +27,7 @@ int main() {
     } else {
         printf("Some error occured. Maybe expression is incorrect or not enough memory\n");
     }
+    getchar();
     return 0;
 }
 

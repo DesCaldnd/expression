@@ -1,7 +1,9 @@
 #ifndef EXPRESSION_PROCESS_H
 #define EXPRESSION_PROCESS_H
-
+#include "extern.h"
 #include "structs.h"
+
+EXTERN_START
 
 char* get_lexem(char* str, struct expr_item* answer, int* has_left_operand);
 
@@ -28,4 +30,5 @@ int calc_divide(double value, struct stack_d** top, double x);
 int calc_var(double value, struct stack_d** top, double x);
 int calc_const(double value, struct stack_d** top, double x);
 
+EXTERN_END
 #endif
