@@ -2,9 +2,13 @@ cmake_minimum_required(VERSION 3.22)
 project(expression C)
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_FLAGS "-Wall -Werror -Wextra")
-add_executable(Graph src/include/expression_process.h src/lib/expression_process.c src/include/structs.h src/lib/structs.c src/graph.c)
-target_link_libraries(Graph m)
+
+if (MAKE_TESTS)
+add_executable(Graph src/include/expression_process.h src/lib/expression_process.c src/include/extern.h src/include/structs.h src/lib/structs.c src/graph.c)
+    if (GCC)
+        target_link_libraries(Graph m)
+    endif ()
+endif ()
 
 
 file(GLOB_RECURSE HEADERS_INCLUDE "src/include/*.h*")
@@ -20,7 +24,9 @@ if (BUILD_SHARED_LIBS)
     target_compile_definitions(${TARGET_NAME} PUBLIC ${TARGET_NAME}_SHAREDLIB)
 endif()
 
+if(GCC)
 target_link_libraries(${TARGET_NAME} m)
+endif ()
 target_compile_features(${TARGET_NAME} INTERFACE c_std_11)
 target_include_directories(${TARGET_NAME}
         PRIVATE
