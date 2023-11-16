@@ -138,12 +138,12 @@ char* get_lexem(char* str, struct expr_item* answer, int* has_left_operand) {
         answer->calculate = &calc_ln;
         *has_left_operand = 0;
         str += 2;
-    } else if (strncmp("ln", str, 2) == 0 && !*has_left_operand){
+    } else if (strncmp("abs", str, 3) == 0 && !*has_left_operand){
         answer->type = ABS;
         answer->priority = 3;
         answer->calculate = &calc_abs;
         *has_left_operand = 0;
-        str += 2;
+        str += 3;
     } else if (strncmp("-", str, 1) == 0 && !*has_left_operand) {
         answer->type = UN_MINUS;
         answer->priority = 3;
