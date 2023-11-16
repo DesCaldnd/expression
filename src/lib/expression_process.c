@@ -138,6 +138,12 @@ char* get_lexem(char* str, struct expr_item* answer, int* has_left_operand) {
         answer->calculate = &calc_ln;
         *has_left_operand = 0;
         str += 2;
+    } else if (strncmp("ln", str, 2) == 0 && !*has_left_operand){
+        answer->type = ABS;
+        answer->priority = 3;
+        answer->calculate = &calc_abs;
+        *has_left_operand = 0;
+        str += 2;
     } else if (strncmp("-", str, 1) == 0 && !*has_left_operand) {
         answer->type = UN_MINUS;
         answer->priority = 3;
@@ -355,6 +361,18 @@ int calc_pow(double value, struct stack_d** top, double x) {
         lhs = pow(lhs, rhs) + 0 * value + 0 * x;
         stack_d_push(top, lhs);
         return (*top)->data == lhs;
+    }
+    return 0;
+}
+
+int calc_abs(double value, struct stack_d** top, double x)
+{
+    if (!stack_d_is_empty(*top)) {
+        double val = stack_d_top(*top);
+        stack_d_pop(top);
+        val = fabs(val) + 0 * x + 0 * value;
+        stack_d_push(top, val);
+        return (*top)->data == val;
     }
     return 0;
 }

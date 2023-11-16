@@ -17,6 +17,7 @@ enum oper_type {
     TAN,
     CTG,
     POW,
+    ABS,
     SQRT,
     LN,
     VARIABLE,
